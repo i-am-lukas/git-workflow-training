@@ -2,6 +2,7 @@ package org.example;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +24,10 @@ public class CalculatorTest {
         assertEquals(1, result);
     }
 
+
+
+/* Asercje jUnita */
+
     @Test
     public void zeroVerify() {
         int result = calc.subtract("2", "2");
@@ -34,6 +39,10 @@ public class CalculatorTest {
         int result = calc.subtract("2", "2");
         assertEquals("Zero value", 0, result);
     }
+
+
+
+/* Asercje assertJ */
 
     @Test
     public void assertJTestingString(){
@@ -54,11 +63,35 @@ public class CalculatorTest {
                 .hasSize(3)
                 .doesNotContain(new Point(10, 10));
 
-        assertThat(points).extracting("x","y")
+        assertThat(points).extracting("x", "y")
                 .contains(
-                        tuple(4,5),
-                        tuple(0,0))
+                        tuple(4, 5),
+                        tuple(0, 0))
+                .hasSize(3);
+
+        assertThat(points).extracting("x", Integer.class)
+                .contains(1, 4, 0)
                 .hasSize(3);
     }
 
+
+/* Asercje mockito */
+
+    @Test
+    public void mockitoTesting() {
+        IFearable fearableMock = mock(IFearable.class);
+        when(fearableMock.characterName()).thenReturn("Lurtz");
+        when(fearableMock.lordAbbreviation()).thenReturn('M');
+        when(fearableMock.showYourNation()).thenReturn(IFearable.Home.Gondor);
+
+        String result = fearableMock.characterName();
+        assertThat(result)
+                .hasSize("Lurtz".length())
+                .isEqualToIgnoringWhitespace("   Lurtz")
+                .isNotEqualToIgnoringCase("  LuRTZ")
+                .isNotNull();
+
+        verify(fearableMock, times(1)).characterName();
+
+    }
 }
