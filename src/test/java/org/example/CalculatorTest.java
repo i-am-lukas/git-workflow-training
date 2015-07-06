@@ -28,7 +28,7 @@ public class CalculatorTest {
 
     @Test
     public void zeroValue() {
-        int result = calc.subtract("3", "2");
+        int result = calc.subtract("2", "2");
         assertEquals("Zero value", 0, result);
     }
 
